@@ -75,10 +75,17 @@
 *****************************************************************************
 
 *** Next ***
+- NEW: The callback of drivers with circular buffers (ADC, DAC, I2S, SPI) has
+       been simplified, no parameters. A driver function xxxIsBufferComplete()
+       has been added to determine if it is the half buffer callback or the
+       final callback.
+- NEW: ADC driver state machine change, now the state ADC_COMPLETE is set
+       before calling the 2nd callback even in circular mode. This has been
+       done for consistency with other drivers with circular buffers.
 - NEW: Low level drivers simplification. There is a new template of LLD, now
        driver and configuration types are defined in the HLD, LLD just exports
        macros with the fields to be added to the structures.
-       So far the drivers updated are: ADC, DAC, RTC, SPI, TRNG, WSPI.
+       So far the drivers updated are: ADC, DAC, I2S, RTC, SPI, TRNG, WSPI.
 - NEW: Added UART7/8 support to STM32 UART USARTv1 driver.
 - NEW: Added persistent storage interface to the STM32 RTCv2 driver.
 - NEW: STM32 RTCv2 driver now supports callbacks on events.
