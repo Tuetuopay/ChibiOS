@@ -149,6 +149,13 @@
 #define USB_HOST_WAKEUP_DURATION            2
 #endif
 
+/**
+ * @brief   Enable IRQ proxy pointer
+ */
+#if !defined(STM32_USB_OTG_USE_PROXY_IRQ) || defined(__DOXYGEN__)
+#define STM32_USB_OTG_USE_PROXY_IRQ         FALSE
+#endif
+
 /*===========================================================================*/
 /* Derived constants and error checks.                                       */
 /*===========================================================================*/
@@ -527,6 +534,13 @@ struct USBDriver {
    */
   THD_WORKING_AREA(wa_pump, STM32_USB_OTG_THREAD_STACK_SIZE);
 #endif
+#endif
+#if STM32_USB_OTG_USE_PROXY_IRQ
+  /**
+   * @brief   Pointer to an IRQ function for compile-time compatibility with
+   *          other USB drivers
+   */
+  void                          (*irqOverride)(void);
 #endif
 };
 

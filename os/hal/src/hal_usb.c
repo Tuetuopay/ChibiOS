@@ -290,6 +290,9 @@ void usbObjectInit(USBDriver *usbp) {
   }
   usbp->transmitting = 0;
   usbp->receiving    = 0;
+#if defined(STM32_USB_OTG_USE_PROXY_IRQ) && STM32_USB_OTG_USE_PROXY_IRQ
+  usbp->irqOverride  = NULL;
+#endif
 }
 
 /**

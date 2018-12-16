@@ -710,7 +710,12 @@ OSAL_IRQ_HANDLER(STM32_OTG1_HANDLER) {
 
   OSAL_IRQ_PROLOGUE();
 
-  usb_lld_serve_interrupt(&USBD1);
+#if STM32_USB_OTG_USE_PROXY_IRQ
+  if (USBD1.irqOverride)
+    USBD1.irqOverride();
+  else
+#endif
+    usb_lld_serve_interrupt(&USBD1);
 
   OSAL_IRQ_EPILOGUE();
 }
@@ -726,7 +731,12 @@ OSAL_IRQ_HANDLER(STM32_OTG2_HANDLER) {
 
   OSAL_IRQ_PROLOGUE();
 
-  usb_lld_serve_interrupt(&USBD2);
+#if STM32_USB_OTG_USE_PROXY_IRQ
+  if (USBD2.irqOverride)
+    USBD2.irqOverride();
+  else
+#endif
+    usb_lld_serve_interrupt(&USBD2);
 
   OSAL_IRQ_EPILOGUE();
 }
